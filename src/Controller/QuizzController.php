@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Quizz;
+use App\Entity\User;
 use App\Form\QuizzType;
 use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,6 +26,7 @@ class QuizzController extends AbstractController
     public function new(Request $request, QuizzRepository $quizzRepository): Response
     {
         $quizz = new Quizz();
+        $quizz->setAuthor($this->getUser());
         $form = $this->createForm(QuizzType::class, $quizz);
         $form->handleRequest($request);
 
