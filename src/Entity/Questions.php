@@ -19,8 +19,8 @@ class Questions
     #[ORM\Column(length: 255)]
     private ?string $Wording = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $Answers = null;
+    #[ORM\Column]
+    private array $Answers = [];
 
     #[ORM\Column(length: 255)]
     private ?string $Image = null;
@@ -57,14 +57,14 @@ class Questions
         return $this;
     }
 
-    public function getAnswers(): ?string
+    public function getAnswers(): ?array
     {
         return $this->Answers;
     }
 
-    public function setAnswers(string $Answers): self
+    public function setAnswers(array $answers): self
     {
-        $this->Answers = $Answers;
+        $this->Answers = $answers;
 
         return $this;
     }

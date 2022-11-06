@@ -1,15 +1,32 @@
 {% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    <style>
+    ul{
+        list-style-type: none;
+    }
 
-{% block title %}Hello JouerController!{% endblock %}
+</style>
+{% endblock %}
+
+{% block title %} {{quizz.Title}} {% endblock %}
 
 {% block body %}
 
 <div class="container">
-    <h1>Vous jouez le quizz : {{ quizz }} !</h1>
+    <h1>Vous jouez le quizz : {{ quizz.Title }} !</h1>
+    <p> {{ quizz.Description }} </p>
 
     {% for question in questions %}
 
-        <p> {{ question.wording }} </p>
+        <div class="container">
+        <h4> {{ question.wording }} </h4>
+        <ul>
+            {% for answer in question.Answers %}
+                <li><input type="radio" id="{{ answer }}" name=" {{ question.wording }}" value="{{ answer }}"> {{ answer }} </li>
+            {% endfor %}
+        </ul>
+        </div>
         
     {% endfor %}
 
