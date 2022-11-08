@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class QuizzType extends AbstractType
 {
@@ -21,7 +20,7 @@ class QuizzType extends AbstractType
             ->add('Title')
             ->add('Description', TextareaType::class)
             ->add('Theme', ChoiceType::class, [
-                'choices' => [
+                'choices'=> [
                     'Sport' => "Sport",
                     'Gaming' => "Gaming",
                     'Cinema' => "Cinema",
@@ -30,7 +29,7 @@ class QuizzType extends AbstractType
                     'Sciences' => "Sciences",
                     'Histoire' => "Histoire",
                     'Pop Culture' => "Pop Culture",
-                    'Géographie' => "Géographie",
+                    'Géographie' => "Géographie", 
                     'Animaux' => "Animaux",
                     'Autre' => "Autre"
                 ]
@@ -44,7 +43,7 @@ class QuizzType extends AbstractType
                     '5' => 5
                 ]
             ])
-            ->add('Questions', CollectionType::class, [
+            ->add('Questions', CollectionType::class,[
                 'entry_type' => QuestionsType::class,
                 'label' => 'Questions',
                 'entry_options' => ['label' => false],
@@ -52,8 +51,10 @@ class QuizzType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false
             ])
-            ->add('imageFile', VichImageType::class)
-            ->add('valider', SubmitType::class);
+            ->add('valider', SubmitType::class)
+    ;
+        
+ 
     }
 
     public function configureOptions(OptionsResolver $resolver): void
