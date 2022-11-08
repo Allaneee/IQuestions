@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Entity;
+use PhpParser\Node\Expr\Cast\Array_;
+use Symfony\Component\Console\Question\Question;
 
 #[ORM\Entity(repositoryClass: QuizzRepository::class)]
 class Quizz
@@ -25,17 +28,27 @@ class Quizz
     #[ORM\ManyToOne(inversedBy: 'createdquizz')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $Author = null;
-
-    #[ORM\OneToMany(mappedBy: 'quizz', targetEntity: Questions::class, orphanRemoval: true)]
+    
+    #[ORM\OneToMany(mappedBy: 'quizz',cascade : ["persist", "remove"], targetEntity: Questions::class, orphanRemoval: true)]
     private Collection $questions;
 
     #[ORM\OneToMany(mappedBy: 'quizz', targetEntity: Play::class, orphanRemoval: true)]
     private Collection $played;
 
+    #[ORM\Column]
+    private ?bool $Hide = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Title = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Description = null;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->played = new ArrayCollection();
+        $this->setHide(false);
     }
 
     public function getId(): ?int
@@ -77,7 +90,7 @@ class Quizz
         $this->Author = $Author;
 
         return $this;
-    }
+    }  
 
     /**
      * @return Collection<int, Questions>
@@ -137,5 +150,46 @@ class Quizz
         }
 
         return $this;
+    }
+
+    public function isHide(): ?bool
+    {
+        return $this->Hide;
+    }
+
+    public function setHide(bool $Hide): self
+    {
+        $this->Hide = $Hide;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->Title;
+    }
+
+    public function setTitle(string $Title): self
+    {
+        $this->Title = $Title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

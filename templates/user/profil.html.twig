@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ app.user.pseudo }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+	<h3>{{app.user.pseudo}}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+                <th>ThemePref</th>
+                <td>{{ app.user.ThemePref }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ app.user.Age }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_user_edit', {'id': app.user.id}) }}">modifier</a>
+    </div>
+
+    <div class="container">
+        <h3> Mes quizz : </h3>
+        <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Titre</th>
+      <th scope="col">Theme</th>
+      <th scope="col">Difficulté</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for quizz in quizzs %}
+    <tr>
+        <th>{{ quizz.title }}</th>
+        <td> {{ quizz.Theme }} </td>
+        <td> {{ quizz.Difficulty }} </td>
+        <td> </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ path('app_quizz_new', {'id': app.user.id}) }}">Créer un quizz</a>
+    </div>
+{% endblock %}

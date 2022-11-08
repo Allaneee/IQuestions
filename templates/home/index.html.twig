@@ -7,16 +7,47 @@
 
 	<main role="main" class="container">
 		<div class="jumbotron text-center">
-			<h1>Bienvenue sur IQuestions !</h1>
-			<p class="lead text-info">Vous pouvez voir les quizz dans le
-				<a href="jeu">fil d'actualité</a>
-				, vous pouvez également vous inscrire pour pouvoir créer votre quizz.
+			<h1>Les Quizs de IQuestions !</h1>
+			<p class="lead text-info">Vous pouvez voir ici les quizz
+				,vous pouvez également vous inscrire pour pouvoir créer votre quizz.
             </p>
+			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
+			<tbody>
+			<style>
+			.card{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 23px;
+			}
+			</style>
+			<div class="container">
+				<div class="row d-flex justify-content-space-around">
+					{% for quizz in quizzs %}
+						<div class="col-auto">
+							<div class="card" style="width: 18rem;">
+							<img class="card-img-top" src="..." alt="Card image cap">
+								<div class="card-body">
+									<h5 class="card-title">{{ quizz.id}}</h5>
+									<p class="card-text">Theme: {{ quizz.Theme}}</p>
+									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
+									<p class="card-text">Auteur: {{ quizz.Author}}</p>
+									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
+								</div>
+							</div>
+						</div>
+					{% else %}
+            			<tr>
+                			<td colspan="4">aucun enregistrement</td>
+            			</tr>
+					{% endfor %}
+				</div>
+			</div>
+			<br>
             <br>
             <br>
             <p> Une idée ? contacter nous par mail ! </p>
-
+			</tbody>
 		</div>
 	</main>
 {% endblock %}

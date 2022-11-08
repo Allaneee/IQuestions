@@ -16,10 +16,9 @@ class UserType extends AbstractType
             ->add('roles')
             ->add('password')
             ->add('Pseudo')
-            ->add('ProfilePicture')
+            //->add('ProfilePicture')
             ->add('ThemePref')
-            ->add('Age')
-        ;
+            ->add('Age');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

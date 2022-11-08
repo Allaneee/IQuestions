@@ -14,7 +14,7 @@
                 <a class="nav-link" href="/">Accueil<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/jeu">Fil d'actualité</a>
+                <a class="nav-link" href="/quizz">Liste des Quiz</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">À propos</a>
@@ -26,12 +26,19 @@
 
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-            {% if app.user %} 
-            <button class="btn btn-dark" type="button" onclick=window.location.href='deconnexion' value="deconnexion">Se déconnecter</button>
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %} 
+                 <a class="btn btn-outline-light" href="{{ path('admin') }}">Admin</a>
+                {% endif %}
+            <div class='col-xs-10'>
+            <a class="btn btn-outline-light" href="{{ path('app_user_profil') }}">Profil</a>
+            <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+            </div>
             {% else %}
-            <button class="btn btn-dark" type="button" onclick=window.location.href='inscription' value="inscription">S'inscrire</button>
-            <button class="btn btn-dark" type="button" onclick=window.location.href='connexion' value="connexion">Se connecter</button>
+            <button class="btn btn-dark" type="button" onclick=window.location.href='register' value="register">S'inscrire</button>
+            <button class="btn btn-dark" type="button" onclick=window.location.href='login' value="login">Se connecter</button>
             {% endif %}
+            
         </form>
     </div>
 </div>

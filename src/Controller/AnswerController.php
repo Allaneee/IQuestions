@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/reponse')]
+#[Route('/answer')]
 class AnswerController extends AbstractController
 {
     #[Route('/', name: 'app_answer_index', methods: ['GET'])]

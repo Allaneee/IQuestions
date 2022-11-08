@@ -11,14 +11,22 @@
     {% endblock %}
 
 
-    <!-- Fichiers js -->
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
-</head>
-<body>
-    {% include 'base/nav.html.twig' %}
-    {% block body %}{% endblock %}
-    {% include 'base/footer.html.twig' %}
-</body>
+        <!-- Fichiers js | defer permet d'executé le js après l'analyse de la page' -->
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body>
+        {% include 'base/nav.html.twig' %}
+
+
+        {# {% for messages in app.flashes(['success', 'warning']) %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+        {% endfor %}#}
+
+        {% block body %}{% endblock %}
+        {% include 'base/footer.html.twig' %}
+    </body>
 </html>

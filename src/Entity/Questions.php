@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 
 #[ORM\Entity(repositoryClass: QuestionsRepository::class)]
 class Questions
@@ -28,7 +29,7 @@ class Questions
     #[ORM\Column(length: 255)]
     private ?string $CorrectAnswer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne(targetEntity: Quizz::class,cascade : ["persist", "remove"], inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quizz $quizz = null;
 
@@ -39,7 +40,14 @@ class Questions
     {
         $this->playeranswers = new ArrayCollection();
     }
-
+    private $questions;
+    
+    public function getquestions(){
+        return $this->questions;
+    }
+    public function setQuestions($questions){
+        $this->questions=$questions;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -122,7 +130,10 @@ class Questions
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->getWording();
+    }
     public function removePlayeranswer(Answer $playeranswer): self
     {
         if ($this->playeranswers->removeElement($playeranswer)) {
