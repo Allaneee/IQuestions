@@ -30,8 +30,10 @@
                 {% if is_granted('ROLE_ADMIN') %} 
                  <a class="btn btn-outline-light" href="{{ path('admin') }}">Admin</a>
                 {% endif %}
-            <a class="btn btn-outline-danger" href="{{ path('app_user_profil') }}">Profil</a>
+            <div class='col-xs-10'>
+            <a class="btn btn-outline-light" href="{{ path('app_user_profil') }}">Profil</a>
             <a class="btn btn-outline-danger" href="{{ path('app_logout') }}">Deconnexion</a>
+            </div>
             {% else %}
             <button class="btn btn-dark" type="button" onclick=window.location.href='register' value="register">S'inscrire</button>
             <button class="btn btn-dark" type="button" onclick=window.location.href='login' value="login">Se connecter</button>
