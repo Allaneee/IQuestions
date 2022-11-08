@@ -89,6 +89,10 @@ class QuizzRepository extends ServiceEntityRepository
             ->andWhere('u.Pseudo LIKE :author')
             ->setParameter('author','%'.$filters['author'].'%');
         }
+        if (array_key_exists('title',$filters) && $filters['title'] !== '') {
+            $qb->andWhere('q.Title LIKE :ti')
+            ->setParameter('ti','%'.$filters['title'].'%');
+        }
         return $qb->getQuery()->getResult();
     }
 
