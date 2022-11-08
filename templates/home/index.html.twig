@@ -14,35 +14,13 @@
 			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
 			<tbody>
-      
-			<div class="container-sm">
-				<form>
-					<label for="theme">Choix du thème :</label>
-						<select name="theme" id="theme">
-							<option value=""></option>
-							{% for Theme in themes %}
-								<option value={{Theme.Theme}}>{{Theme.Theme}}</option>
-							{% endfor %}
-						</select>
-					<label for="difficulty">Difficulté :</label>
-						<select name="difficulty" id="difficulty">
-							<option value=""></option>
-							{% for Difficulty in difficulties %}
-								<option value={{Difficulty.Difficulty}}>{{Difficulty.Difficulty}}</option>
-							{% endfor %}
-						</select>
-					<div class="form-floating mb-3">
-						<input type="text" class="form-control" name="title" id="title" placeholder="TitleExemple">
-						<label for="title">Nom du quiz</label>
-					</div>
-					<div class="form-floating mb-3">
-						<input type="text" class="form-control" name="author" id="author" placeholder="AuteurExemple">
-						<label for="author">Auteur rechercher</label>
-					</div>
-					<input type="submit" value="Filtrer" class="btn btn-primary"/> 
-				</form>
-			</div>
-      
+			<style>
+			.card{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 23px;
+			}
+			</style>
 			<div class="container">
 				<div class="row d-flex justify-content-space-around">
 					{% for quizz in quizzs %}
