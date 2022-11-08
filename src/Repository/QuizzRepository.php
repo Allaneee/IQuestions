@@ -63,21 +63,24 @@ class QuizzRepository extends ServiceEntityRepository
             ->getScalarResult()
         ;
    }
-//    public function findAllDifficulty()
-//    {
-//         return $this->createQueryBuilder('q')
-//             ->select('q.Difficulty')
-//             ->distinct() 
-//             ->orderBy('q.Difficulty','ASC')
-//             ->getQuery()
-//             ->getScalarResult()
-//         ;
-//    }
+   public function findAllDifficulty()
+   {
+        return $this->createQueryBuilder('q')
+            ->select('q.Difficulty')
+            ->distinct() 
+            ->orderBy('q.Difficulty','ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+   }
    public function AddfiltersOnQuizz($filters): array
    {
         $qb = $this->createQueryBuilder('q');
         if (array_key_exists('theme',$filters) && $filters['theme'] !== '') {
             $qb->andWhere('q.Theme LIKE :th')->setParameter('th',$filters['theme'].'%');
+        }
+        if (array_key_exists('difficulty',$filters) && $filters['difficulty'] !== '') {
+            $qb->andWhere('q.Difficulty = :dif')->setParameter('dif',$filters['difficulty']);
         }
         return $qb->getQuery()->getResult();
     }

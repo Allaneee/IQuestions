@@ -16,7 +16,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'quizzs' => $quizzRepository->AddfiltersOnQuizz($request->query->all()),
             'themes' => $quizzRepository->findAllTheme(),
-           //'difficulties' => $quizzRepository->findAllDifficulty(),
+            'difficulties' => $quizzRepository->findAllDifficulty(),
         ]);
     }
 
