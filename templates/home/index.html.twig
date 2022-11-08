@@ -14,16 +14,10 @@
 			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
 			<tbody>
-			<style>
-			.card{
-				margin-top: 10px;
-				margin-bottom: 10px;
-				margin-left: 23px;
-			}
-			</style>
 			<div class="container">
 				<div class="row">
 					{% for quizz in quizzs %}
+						
 						<div class="col col-lg-auto">
 							<div class="card">
 								<img class="card-img-top" src="{{ asset('/uploads/User/quizz_image') }}" alt="Card image cap">
