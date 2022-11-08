@@ -13,8 +13,9 @@
             </p>
 			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
+       		
 			<tbody>
-      
+
 			<div class="container-sm">
 				<form>
 					<label for="theme">Choix du thème :</label>
@@ -42,34 +43,31 @@
 					<input type="submit" value="Filtrer" class="btn btn-primary"/> 
 				</form>
 			</div>
-      
-			<div class="container">
-				<div class="row d-flex justify-content-space-around">
-					{% for quizz in quizzs %}
-						<div class="col-auto">
-							<div class="card" style="width: 18rem;">
-							<img class="card-img-top" src="..." alt="Card image cap">
-								<div class="card-body">
-									<h5 class="card-title">{{ quizz.id}}</h5>
-									<p class="card-text">Theme: {{ quizz.Theme}}</p>
-									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
-									<p class="card-text">Auteur: {{ quizz.Author}}</p>
-									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
-								</div>
-							</div>
-						</div>
-					{% else %}
-            			<tr>
-                			<td colspan="4">aucun enregistrement</td>
-            			</tr>
-					{% endfor %}
+			{% for quizz in quizzs %}
+				<div class="card" style="width: 18rem;">
+				<img class="card-img-top" src="..." alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">{{ quizz.id}}</h5>
+					<p class="card-text">Theme: {{ quizz.Theme}}</p>
+					<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
+					<p class="card-text">Auteur: {{ quizz.Author}}</p>
+					<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
 				</div>
-			</div>
+				</div>
+			{% else %}
+            <tr>
+                <td colspan="4">aucun enregistrement</td>
+            </tr>
+			{% endfor %}
 			<br>
+			
+
             <br>
             <br>
             <p> Une idée ? contacter nous par mail ! </p>
-			</tbody>
+
 		</div>
+		</tbody>
+		</table>
 	</main>
 {% endblock %}
