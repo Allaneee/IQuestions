@@ -16,12 +16,12 @@
             <br>
 			<tbody>
 			<div class="containers">
-				<div class="row d-flex justify-content-space-evently">
+				<div class="row">
 					{% for quizz in quizzs %}
 						<link rel="stylesheet" href="{{ asset('styles/app.css') }}">
-  							<div class="col-auto">
+  							<div class="col col-lg-auto">
 								<div class="card">
-									<img class="card-img-top" src="{{ asset('/uploads/User/quizz_image') }}" alt="Card image cap">
+									<img class="card-img-top" src="IQuestions\public\uploads\User\quizz_image\maldives-63695df64a92c821299873.jpg" alt="Card image cap">
 									<div class="card-body">
 										<h5 class="card-title">{{ quizz.id}}</h5>
 										<p class="card-text">Theme: {{ quizz.Theme}}</p>
