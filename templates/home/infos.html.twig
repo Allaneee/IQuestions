@@ -4,28 +4,32 @@
 
 {% block body %}
 
-</div>        
-	<div class="px-4 py-5 my-5 text-center">
-		<h1 class="display-5 fw-bold">À propos de nous :</h1>
-   		<br>
-		<div class="col-lg-6 mx-auto">
-			<p>Bilel Chebbi (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr">
-					&#x1F4E7;</a>
-			</p>
-			<br>
-			<p>Allane Bourdon (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr">
-			&#x1F4E7;</a>
-			</p>
-			<br>
-	  		<p>Victor Bonlieu-Fortier (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr">
-			&#x1F4E7;</a>
-	  		</p>
-			<br>
-    		<p>Henri Cossais (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr">
-			&#x1F4E7;</a>
-    		</p>
-		</div>	
-	</div>
-</div>
+	<link href="{{ asset('assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+  <table id ="tab_infos">
+    <thead>
+        <tr>
+            <th>À propos de nous :</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test.png ></li>
+            Bilel Chebbi (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Allane Bourdon (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Victor Bonlieu-Fortier (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Henri Cossais (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+    </tbody>
+  </table>
 
 {% endblock %}
