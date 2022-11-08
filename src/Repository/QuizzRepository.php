@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Quizz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use PhpParser\Node\Expr\Cast\String_;
 
 /**
  * @extends ServiceEntityRepository<Quizz>
@@ -52,6 +53,34 @@ class QuizzRepository extends ServiceEntityRepository
            ->getResult()
        ;
    }
+   public function findAllTheme()
+   {
+        return $this->createQueryBuilder('q')
+            ->select('q.Theme')
+            ->distinct() 
+            ->orderBy('q.Theme','ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+   }
+//    public function findAllDifficulty()
+//    {
+//         return $this->createQueryBuilder('q')
+//             ->select('q.Difficulty')
+//             ->distinct() 
+//             ->orderBy('q.Difficulty','ASC')
+//             ->getQuery()
+//             ->getScalarResult()
+//         ;
+//    }
+   public function AddfiltersOnQuizz($filters): array
+   {
+        $qb = $this->createQueryBuilder('q');
+        if (array_key_exists('theme',$filters) && $filters['theme'] !== '') {
+            $qb->andWhere('q.Theme LIKE :th')->setParameter('th',$filters['theme'].'%');
+        }
+        return $qb->getQuery()->getResult();
+    }
 
    public function findOneByTitle($value): ?Quizz
    {

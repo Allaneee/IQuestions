@@ -15,6 +15,19 @@
             <br>
        		
 			<tbody>
+			{% if themes == true %}	
+				<form>
+					<label for="theme">Choix du thème :</label>
+						<select name="theme" id="theme">
+							<option value=""></option>
+							{% for Theme in themes %}
+								<option value={{Theme.Theme}}>{{Theme.Theme}}</option>
+							{% endfor %}
+						</select>
+						<input type="submit" value="Filtrer" class="btn btn-primary"/> 
+				</form>
+			{% endif %}
+			
 			{% for quizz in quizzs %}
 				<div class="card" style="width: 18rem;">
 				<img class="card-img-top" src="..." alt="Card image cap">
