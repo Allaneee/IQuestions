@@ -6,14 +6,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -35,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $Pseudo = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $ProfilePicture = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ThemePref = null;
@@ -148,7 +148,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->ProfilePicture;
+    }
+
+    public function setProfilePicture(string $ProfilePicture): self
+    {
+        $this->ProfilePicture = $ProfilePicture;
+
+        return $this;
+    }
+
     public function getThemePref(): ?string
     {
         return $this->ThemePref;
