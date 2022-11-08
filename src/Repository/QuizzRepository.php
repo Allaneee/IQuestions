@@ -77,10 +77,17 @@ class QuizzRepository extends ServiceEntityRepository
    {
         $qb = $this->createQueryBuilder('q');
         if (array_key_exists('theme',$filters) && $filters['theme'] !== '') {
-            $qb->andWhere('q.Theme LIKE :th')->setParameter('th',$filters['theme'].'%');
+            $qb->andWhere('q.Theme LIKE :th')
+            ->setParameter('th',$filters['theme'].'%');
         }
         if (array_key_exists('difficulty',$filters) && $filters['difficulty'] !== '') {
-            $qb->andWhere('q.Difficulty = :dif')->setParameter('dif',$filters['difficulty']);
+            $qb->andWhere('q.Difficulty = :dif')
+            ->setParameter('dif',$filters['difficulty']);
+        }
+        if (array_key_exists('author',$filters) && $filters['author'] !== '') {
+            $qb->join('q.Author', 'u')
+            ->andWhere('u.Pseudo LIKE :author')
+            ->setParameter('author','%'.$filters['author'].'%');
         }
         return $qb->getQuery()->getResult();
     }

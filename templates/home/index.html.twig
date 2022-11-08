@@ -15,7 +15,7 @@
             <br>
        		
 			<tbody>
-					
+
 			<form>
 				<label for="theme">Choix du thème :</label>
 					<select name="theme" id="theme">
@@ -31,6 +31,10 @@
 							<option value={{Difficulty.Difficulty}}>{{Difficulty.Difficulty}}</option>
 						{% endfor %}
 					</select>
+				<div class="form-floating mb-3">
+					<input type="text" class="form-control" name="author" id="author" placeholder="AuteurExemple">
+					<label for="author">Auteur rechercher</label>
+				</div>
 				<input type="submit" value="Filtrer" class="btn btn-primary"/> 
 			</form>
 
