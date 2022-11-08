@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jouer{% endblock %}
+{% block title %}Play index{% endblock %}
 
 {% block body %}
-    <h3>Fil d'actualité</h3>
+    <h1>Play index</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Identifiant</th>
-                <th>Score Utilisateur</th>
+                <th>Id</th>
+                <th>ScoreUser</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -19,17 +19,17 @@
                 <td>{{ play.id }}</td>
                 <td>{{ play.ScoreUser }}</td>
                 <td>
-                    <a href="{{ path('app_play_show', {'id': play.id}) }}">voir</a>
-                    <a href="{{ path('app_play_edit', {'id': play.id}) }}">modifier</a>
+                    <a href="{{ path('app_play_show', {'id': play.id}) }}">show</a>
+                    <a href="{{ path('app_play_edit', {'id': play.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">aucun enregistrement</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_play_new') }}">Créer un nouveau quizz</a>
+    <a href="{{ path('app_play_new') }}">Create new</a>
 {% endblock %}

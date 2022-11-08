@@ -8,15 +8,15 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Identifiant</th>
+                <th>Id</th>
                 <td>{{ question.id }}</td>
             </tr>
             <tr>
-                <th>Enoncé</th>
+                <th>Wording</th>
                 <td>{{ question.Wording }}</td>
             </tr>
             <tr>
-                <th>Réponses</th>
+                <th>Answers</th>
                 <td>{{ question.Answers }}</td>
             </tr>
             <tr>
@@ -24,15 +24,15 @@
                 <td>{{ question.Image }}</td>
             </tr>
             <tr>
-                <th>Reponse Correcte</th>
+                <th>CorrectAnswer</th>
                 <td>{{ question.CorrectAnswer }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_questions_index') }}">Retour à la liste</a>
+    <a href="{{ path('app_questions_index') }}">back to list</a>
 
-    <a href="{{ path('app_questions_edit', {'id': question.id}) }}">Modifier</a>
+    <a href="{{ path('app_questions_edit', {'id': question.id}) }}">edit</a>
 
     {{ include('questions/_delete_form.html.twig') }}
 {% endblock %}

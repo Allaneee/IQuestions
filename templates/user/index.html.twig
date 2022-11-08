@@ -8,10 +8,10 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Identifiant</th>
+                <th>Id</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Mot de passe</th>
+                <th>Password</th>
                 <th>Pseudo</th>
                 <th>ProfilePicture</th>
                 <th>ThemePref</th>
@@ -31,17 +31,17 @@
                 <td>{{ user.ThemePref }}</td>
                 <td>{{ user.Age }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">voir</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">modifier</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">aucun enregistrement</td>
+                <td colspan="9">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Créer nouveau</a>
+    <a href="{{ path('app_user_new') }}">Create new</a>
 {% endblock %}
