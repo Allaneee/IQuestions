@@ -12,10 +12,12 @@
         {{ form_row(form.Description) }}
         {{ form_row(form.Theme) }}
         {{ form_row(form.Difficulty) }}
+        {{ form_row(form.imageFile) }}
         <div class="container" id="questions" data-prototype="{{ form_row(form.Questions.vars.prototype)|e('html_attr') }}">
             {{ form_row(form.Questions) }}
             <span></span>
         </div>
+        <br>
     {{ form_end(form) }}
     </div>
 {% endblock %}

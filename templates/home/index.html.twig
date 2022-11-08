@@ -5,6 +5,7 @@
 
 {% block body %}
 
+	<link href="{{ asset('assets/css/home.css') }}" type="text/css" rel="stylesheet">
 	<main role="main" class="container">
 		<div class="jumbotron text-center">
 			<h1>Les Quizs de IQuestions !</h1>
@@ -14,19 +15,12 @@
 			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
 			<tbody>
-			<style>
-			.card{
-				margin-top: 10px;
-				margin-bottom: 10px;
-				margin-left: 23px;
-			}
-			</style>
 			<div class="container">
 				<div class="row d-flex justify-content-space-around">
 					{% for quizz in quizzs %}
 						<div class="col-auto">
-							<div class="card" style="width: 18rem;">
-							<img class="card-img-top" src="..." alt="Card image cap">
+							<div class="card">
+								<img class="card-img-top" src="{{ asset('/uploads/User/quizz_image') }}" alt="Card image cap">
 								<div class="card-body">
 									<h5 class="card-title">{{ quizz.id}}</h5>
 									<p class="card-text">Theme: {{ quizz.Theme}}</p>
