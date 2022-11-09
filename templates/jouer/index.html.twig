@@ -17,18 +17,10 @@
     <h1>Vous jouez le quizz : {{ quizz.Title }} !</h1>
     <p> {{ quizz.Description }} </p>
 
-    {% for question in questions %}
-
-        <div class="container">
-        <h4> {{ question.wording }} </h4>
-        <ul>
-            {% for answer in question.Answers %}
-                <li><input type="radio" id="{{ answer }}" name=" {{ question.wording }}" value="{{ answer }}"> {{ answer }} </li>
-            {% endfor %}
-        </ul>
-        </div>
-        
-    {% endfor %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
 
 </div>
 {% endblock %}

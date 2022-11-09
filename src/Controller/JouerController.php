@@ -2,42 +2,39 @@
 
 namespace App\Controller;
 
-use App\Entity\Answer;
-use App\Entity\Play;
 use App\Entity\Quizz;
+use App\Form\UserQuizzAnswersType;
 use App\Repository\QuestionsRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class JouerController extends AbstractController
 {
     #[Route('/game/{id}', name: 'app_jouer', methods: ['GET', 'POST'])]
-    public function index(Quizz $quizz, QuestionsRepository $questionsRepository ): Response
+    public function index(HttpFoundationRequest $request, Quizz $quizz, QuestionsRepository $questionsRepository ): Response
     {
         $questions = $questionsRepository->findByQuizz($quizz);
-
-        $userReponse = new Answer();
-        $userReponse->setPlayer($this->getUser());
-
-        foreach ($questions as $question){
+        foreach ($questions as $question) {
             $quizz->addQuestion($question);
-            $userReponse->setQuestions($question);
-
-            $form[] = $this->createForm(Answer::class, $question);
         }
 
-        foreach ($form as $forms){
-            $form->handleRequest($question);
+        $array[] = [];
+
+        $form = $this->createForm(UserQuizzAnswersType::class, $array ,['quizz' => $quizz]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('jouer/index.html.twig', [
             'controller_name' => 'JouerController',
-            'questions' => $quizz->getQuestions(),
             'quizz' => $quizz,
-            'form' => $forms
+            'form' => $form->createView()
         ]);
     }
 }
