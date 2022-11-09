@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Quizz;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,12 +10,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(QuizzRepository $quizzRepository): Response
+    #[Route('/', name: 'app_home', methods:['GET'])]
+    public function index(Request $request, QuizzRepository $quizzRepository): Response
     {
         return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
-            'quizzs' => $quizzRepository->findAll(),
+            'quizzs' => $quizzRepository->AddfiltersOnQuizz($request->query->all()),
+            'themes' => $quizzRepository->findAllTheme(),
+            'difficulties' => $quizzRepository->findAllDifficulty(),
         ]);
     }
 

@@ -12,7 +12,7 @@
         {{ form_row(form.Description) }}
         {{ form_row(form.Theme) }}
         {{ form_row(form.Difficulty) }}
-        <div class="container" id="questions" data-prototype="{{ form_row(form.Questions.vars.prototype)|e('html_attr') }}">
+        <div class="container border border-info mb-3" id="questions" data-prototype="{{ form_row(form.Questions.vars.prototype)|e('html_attr') }}">
             {{ form_row(form.Questions) }}
             <span></span>
         </div>
@@ -27,7 +27,7 @@
             collection = document.querySelector("#questions");
             span = collection.querySelector("span");
             boutonAjout = document.createElement("button");
-            boutonAjout.className = "btn btn-primary";
+            boutonAjout.className = "btn btn-primary my-3";
             boutonAjout.innerText = "Ajouter une questions";
             let nouveauBouton = span.append(boutonAjout);
             collection.dataset.index = collection.querySelectorAll("input").length;
@@ -44,7 +44,7 @@
             let newForm = content.querySelector("div");
             let boutonSuppr = document.createElement("button");
             boutonSuppr.type = "button";
-            boutonSuppr.className = "btn btn-danger";
+            boutonSuppr.className = "btn btn-danger mb-3";
             boutonSuppr.id = "delete-departement-" + index;
             boutonSuppr.innerText = "Supprimer cette questions";
             newForm.append(boutonSuppr);
