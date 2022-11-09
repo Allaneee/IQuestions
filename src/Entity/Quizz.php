@@ -47,7 +47,7 @@ class Quizz
     #[ORM\Column(length: 255)]
     private ?string $Description = null;
 
-    #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'quizz_image', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(type: 'string')]
