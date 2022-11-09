@@ -14,7 +14,7 @@
 			<a class="btn btn-primary mb-3" href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
 			<tbody>
-						<div class="container-sm">
+			<div class="container-sm">
 				<form>
 					<label for="theme">Choix du thème :</label>
 						<select name="theme" id="theme">
@@ -38,7 +38,7 @@
 						<input type="text" class="form-control" name="author" id="author" placeholder="AuteurExemple">
 						<label for="author">Auteur rechercher</label>
 					</div>
-					<input type="submit" value="Filtrer" class="btn btn-primary"/> 
+					<input type="submit" value="Filtrer" class="btn btn-outline-primary"/> 
 				</form>
 			</div>
 			<style>
@@ -55,11 +55,11 @@
 							<div class="card" style="width: 18rem;">
 							<img class="card-img-top" src="..." alt="Card image cap">
 								<div class="card-body">
-									<h5 class="card-title">{{ quizz.id}}</h5>
+									<h5 class="card-title">{{ quizz.Title}}</h5>
 									<p class="card-text">Theme: {{ quizz.Theme}}</p>
 									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
 									<p class="card-text">Auteur: {{ quizz.Author}}</p>
-									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
+									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
 								</div>
 							</div>
 						</div>

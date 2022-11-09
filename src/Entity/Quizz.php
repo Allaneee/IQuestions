@@ -9,9 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Doctrine\ORM\Mapping\Entity;
-use PhpParser\Node\Expr\Cast\Array_;
-use Symfony\Component\Console\Question\Question;
 
 #[ORM\Entity(repositoryClass: QuizzRepository::class)]
 #[Vich\Uploadable]
