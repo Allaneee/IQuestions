@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	{{ app.user.pseudo }}
+	IQuestions - {{ app.user.pseudo }}
 {% endblock %}
 
 {% block body %}
@@ -29,7 +29,7 @@
 
     <div class="container">
         <h3> Mes quizz : </h3>
-        <table class="table">
+        <table class="table table-bordered">
   <thead>
     <tr>
       <th scope="col">Titre</th>
@@ -44,7 +44,7 @@
         <th>{{ quizz.title }}</th>
         <td> {{ quizz.Theme }} </td>
         <td> {{ quizz.Difficulty }} </td>
-        <td> </td>
+        <td> <a class="btn btn-outline-success" href="{{ path('app_quizz_edit', {'id': quizz.id}) }}">Modifier</a></td>
     </tr>
     {% endfor %}
   </tbody>

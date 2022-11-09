@@ -67,6 +67,7 @@ class QuizzRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('q')
             ->select('q.Theme')
             ->distinct() 
+            ->where('q.Hide = false')
             ->orderBy('q.Theme','ASC')
             ->getQuery()
             ->getScalarResult()
@@ -77,6 +78,7 @@ class QuizzRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('q')
             ->select('q.Difficulty')
             ->distinct() 
+            ->where('q.Hide = false')
             ->orderBy('q.Difficulty','ASC')
             ->getQuery()
             ->getScalarResult()
@@ -84,7 +86,8 @@ class QuizzRepository extends ServiceEntityRepository
    }
    public function AddfiltersOnQuizz($filters): array
    {
-        $qb = $this->createQueryBuilder('q');
+        $qb = $this->createQueryBuilder('q')
+        ->where('q.Hide = false');
         if (array_key_exists('theme',$filters) && $filters['theme'] !== '') {
             $qb->andWhere('q.Theme LIKE :th')
             ->setParameter('th',$filters['theme'].'%');
