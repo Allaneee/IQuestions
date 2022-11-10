@@ -16,7 +16,6 @@ class QuestionsType extends AbstractType
             ->add('Answers')
             ->add('Image')
             ->add('CorrectAnswer')
-            ->add('quizz')
         ;
     }
 

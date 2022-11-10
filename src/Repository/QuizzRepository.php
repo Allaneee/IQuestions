@@ -39,28 +39,72 @@ class QuizzRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Quizz[] Returns an array of Quizz objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Quizz[] Returns an array of Quizz objects
+    */
+   public function findAllByUserId($value): array
+   {
+       return $this->createQueryBuilder('q')
+           ->andWhere('q.Author = :val')
+           ->setParameter('val', $value)
+           ->orderBy('q.Title', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
-//    public function findOneBySomeField($value): ?Quizz
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByTitle($value): ?Quizz
+   {
+       return $this->createQueryBuilder('q')
+           ->andWhere('q.Title = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
+   public function findAllTheme()
+   {
+        return $this->createQueryBuilder('q')
+            ->select('q.Theme')
+            ->distinct() 
+            ->where('q.Hide = false')
+            ->orderBy('q.Theme','ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+   }
+   public function findAllDifficulty()
+   {
+        return $this->createQueryBuilder('q')
+            ->select('q.Difficulty')
+            ->distinct() 
+            ->where('q.Hide = false')
+            ->orderBy('q.Difficulty','ASC')
+            ->getQuery()
+            ->getScalarResult()
+        ;
+   }
+   public function AddfiltersOnQuizz($filters): array
+   {
+        $qb = $this->createQueryBuilder('q')
+        ->where('q.Hide = false');
+        if (array_key_exists('theme',$filters) && $filters['theme'] !== '') {
+            $qb->andWhere('q.Theme LIKE :th')
+            ->setParameter('th',$filters['theme'].'%');
+        }
+        if (array_key_exists('difficulty',$filters) && $filters['difficulty'] !== '') {
+            $qb->andWhere('q.Difficulty = :dif')
+            ->setParameter('dif',$filters['difficulty']);
+        }
+        if (array_key_exists('author',$filters) && $filters['author'] !== '') {
+            $qb->join('q.Author', 'u')
+            ->andWhere('u.Pseudo LIKE :author')
+            ->setParameter('author','%'.$filters['author'].'%');
+        }
+        if (array_key_exists('title',$filters) && $filters['title'] !== '') {
+            $qb->andWhere('q.Title LIKE :ti')
+            ->setParameter('ti','%'.$filters['title'].'%');
+        }
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -6,11 +6,14 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -34,9 +37,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $Pseudo = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $ProfilePicture = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $ThemePref = null;
 
     #[ORM\Column]
@@ -51,11 +51,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'player', targetEntity: Answer::class, orphanRemoval: true)]
     private Collection $answers;
 
+    #[ORM\Column]
+    private ?bool $Hide = null;
+
     public function __construct()
     {
         $this->createdquizz = new ArrayCollection();
         $this->playedquizz = new ArrayCollection();
         $this->answers = new ArrayCollection();
+        
+        $this
+        ->setHide(false)
+        ->setRoles(['ROLE_USER']);
     }
 
     public function getId(): ?int
@@ -91,8 +98,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+
+        if ($this->getId() == 1){
+            $this->setRoles(['ROLE_ADMIN']);
+        }
 
         return array_unique($roles);
     }
@@ -139,19 +148,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getProfilePicture(): ?string
-    {
-        return $this->ProfilePicture;
-    }
-
-    public function setProfilePicture(string $ProfilePicture): self
-    {
-        $this->ProfilePicture = $ProfilePicture;
-
-        return $this;
-    }
-
+    
     public function getThemePref(): ?string
     {
         return $this->ThemePref;
@@ -264,5 +261,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    public function isHide(): ?bool
+    {
+        return $this->Hide;
+    }
+
+    public function setHide(bool $Hide): self
+    {
+        $this->Hide = $Hide;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getPseudo();
     }
 }

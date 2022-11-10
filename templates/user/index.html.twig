@@ -8,12 +8,11 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                <th>Identifiant</th>
                 <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
+                <th>Mot de passe</th>
                 <th>Pseudo</th>
-                <th>ProfilePicture</th>
                 <th>ThemePref</th>
                 <th>Age</th>
                 <th>actions</th>
@@ -27,21 +26,20 @@
                 <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>{{ user.Pseudo }}</td>
-                <td>{{ user.ProfilePicture }}</td>
                 <td>{{ user.ThemePref }}</td>
                 <td>{{ user.Age }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    <a href="{{ path('app_user_show', {'id': user.id}) }}">voir</a>
+                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="9">no records found</td>
+                <td colspan="9">aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    <a href="{{ path('app_user_new') }}">Créer nouveau</a>
 {% endblock %}

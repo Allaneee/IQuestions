@@ -3,16 +3,16 @@
 {% block title %}Create quizz{% endblock %}
 
 {% block body %}
-    <h1>Ajouter des nouvelles qustion à votre quiz :</h1>
+    <h1>Ajouter des nouvelles question à votre quiz :</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Wording</th>
-                <th>Answers</th>
+                <th>Identifiant</th>
+                <th>Enoncé</th>
+                <th>Reponse</th>
                 <th>Image</th>
-                <th>CorrectAnswer</th>
+                <th>Reponse Correcte</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -25,17 +25,17 @@
                 <td>{{ question.Image }}</td>
                 <td>{{ question.CorrectAnswer }}</td>
                 <td>
-                    <a href="{{ path('app_questions_show', {'id': question.id}) }}">show</a>
-                    <a href="{{ path('app_questions_edit', {'id': question.id}) }}">edit</a>
+                    <a href="{{ path('app_questions_show', {'id': question.id}) }}">voir</a>
+                    <a href="{{ path('app_questions_edit', {'id': question.id}) }}">modifier</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">aucun enregistrement</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_questions_new') }}">Create new</a>
+    <a href="{{ path('app_questions_new') }}">Créer nouveau</a>
 {% endblock %}

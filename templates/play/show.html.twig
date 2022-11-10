@@ -1,26 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Play{% endblock %}
+{% block title %}Jeu{% endblock %}
 
 {% block body %}
-    <h1>Play</h1>
+    <h2>Jouer</h2>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>Identifiant</th>
                 <td>{{ play.id }}</td>
             </tr>
             <tr>
-                <th>ScoreUser</th>
+                <th>Score Utilisateur</th>
                 <td>{{ play.ScoreUser }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_play_index') }}">back to list</a>
+    <a href="{{ path('app_play_index') }}">Retour à la liste</a>
 
-    <a href="{{ path('app_play_edit', {'id': play.id}) }}">edit</a>
+    <a href="{{ path('app_play_edit', {'id': play.id}) }}">Modifier</a>
 
     {{ include('play/_delete_form.html.twig') }}
 {% endblock %}
