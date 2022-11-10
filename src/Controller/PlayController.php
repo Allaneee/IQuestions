@@ -3,9 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Play;
+use App\Entity\Quizz;
 use App\Form\PlayType;
 use App\Repository\PlayRepository;
+use App\Repository\QuestionsRepository;
+use App\Repository\QuizzRepository;
+use Doctrine\ORM\Mapping\Id;
+use LDAP\Result;
+use phpDocumentor\Reflection\Types\Integer;
+use PhpParser\Node\Expr\Cast\Array_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,13 +21,42 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/play')]
 class PlayController extends AbstractController
 {
-    #[Route('/', name: 'app_play_index', methods: ['GET'])]
-    public function index(PlayRepository $playRepository): Response
+
+    #[Route('/{id}', name: 'app_play', methods:['GET'])]
+    public function index(Request $request, Quizz $quizz, QuestionsRepository $questionsRepository): Response
     {
+        $questions = $questionsRepository->findByQuizz($quizz);
+        foreach ($questions as $question) {
+            $quizz->addQuestion($question);
+        }
+
+        if($request->query->all() != []){
+            //Calculer le score
+            // return $this->render('play/index.html.twig', [
+            //     'result' => $this->result($request->query->all(), $quizz),
+            // ]);
+        }
         return $this->render('play/index.html.twig', [
-            'plays' => $playRepository->findAll(),
+            'quizz' => $quizz,
+            'questions' => $questions,
         ]);
     }
+
+    public function result(Array $answered, Quizz $quizz)
+    {
+        $result = 0;
+        foreach ($quizz->getQuestions() as $question) {
+            if ($question->getCorrectAnswer() == $answered[$question->getId()]) {
+                $result += 1;
+            }
+        }
+        return $result;
+    }
+    
+
+
+
+
 
     #[Route('/new', name: 'app_play_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PlayRepository $playRepository): Response
@@ -40,14 +77,6 @@ class PlayController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_play_show', methods: ['GET'])]
-    public function show(Play $play): Response
-    {
-        return $this->render('play/show.html.twig', [
-            'play' => $play,
-        ]);
-    }
-
     #[Route('/{id}/edit', name: 'app_play_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Play $play, PlayRepository $playRepository): Response
     {
@@ -64,15 +93,5 @@ class PlayController extends AbstractController
             'play' => $play,
             'form' => $form,
         ]);
-    }
-
-    #[Route('/{id}', name: 'app_play_delete', methods: ['POST'])]
-    public function delete(Request $request, Play $play, PlayRepository $playRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$play->getId(), $request->request->get('_token'))) {
-            $playRepository->remove($play, true);
-        }
-
-        return $this->redirectToRoute('app_play_index', [], Response::HTTP_SEE_OTHER);
     }
 }
