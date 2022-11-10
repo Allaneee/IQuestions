@@ -208,14 +208,14 @@ class Quizz
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
      */
-    public function setImageFile(?File $imageFile = null): void
+    public function setImageFile(?File $image = null): void
     {
-        $this->imageFile = $imageFile;
+        $this->imageFile = $image;
 
-        if (null !== $imageFile) {
+        if ($image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new \DateTime('now');
         }
     }
 
