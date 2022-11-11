@@ -5,9 +5,15 @@ vich_uploader:
         type: attribute
 
     mappings:
+        question_image:
+            uri_prefix: '%app.path.question_image%'
+            upload_destination: '%kernel.project_dir%/public%app.path.question_image%'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+            delete_on_update: true
+            delete_on_remove: true
         quizz_image:
             uri_prefix: '%app.path.quizz_image%'
             upload_destination: '%kernel.project_dir%/public%app.path.quizz_image%'
             namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-            delete_on_update: false
-            delete_on_remove: false
+            delete_on_update: true
+            delete_on_remove: true 

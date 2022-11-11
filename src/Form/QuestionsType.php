@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 class QuestionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -21,8 +22,12 @@ class QuestionsType extends AbstractType
                     ->add('rep1', TextType::class, ['label' => 'Réponse n°1 :'])
                     ->add('rep2', TextType::class, ['label' => 'Réponse n°2 :'])
                     ->add('rep3', TextType::class, ['label' => 'Réponse n°3 :'])
-                    ->add('rep4', TextType::class, ['label' => 'Réponse n°4 :']))
-            ->add('Image')
+                    ->add('rep4', TextType::class, ['label' => 'Réponse n°4 :'])
+                )
+            ->add('imagesFileQuestion', VichImageType::class, [
+                'required' => false,
+                'label' => 'Illustrer votre question :'
+            ])
             ->add('CorrectAnswer', TextType::class, ['label' => 'Bonne réponse'])
         ;
     }
