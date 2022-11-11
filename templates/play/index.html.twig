@@ -3,33 +3,20 @@
 {% block title %}IQuestions - Jouer{% endblock %}
 
 {% block body %}
-    <h3>Fil d'actualité</h3>
+    <h3>{{ quizz.Title }}</h3>
+    <p> {{quizz.description}} </p>
+    <img class="card-img-top" src="{{ asset('uploads/user/quizz_image/')~ quizz.ImageName }}" alt="Card image cap">
+    <form>
+    {% for question in questions %}
+        <h5>{{ question.Wording }}</h5>
+            <div>
+            {% for answer in question.Answers %}
+                    <input type="radio" id="{{answer}}" name="{{question.id}}" value={{answer}} required="required">
+                    <label for={{answer}}>{{answer}}</label>
+            {% endfor %}
+            </div>
+    {% endfor %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Identifiant</th>
-                <th>Score Utilisateur</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for play in plays %}
-            <tr>
-                <td>{{ play.id }}</td>
-                <td>{{ play.ScoreUser }}</td>
-                <td>
-                    <a href="{{ path('app_play_show', {'id': play.id}) }}">voir</a>
-                    <a href="{{ path('app_play_edit', {'id': play.id}) }}">modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">aucun enregistrement</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_play_new') }}">Créer un nouveau quizz</a>
+    <input type="submit" value="Play" class="btn btn-outline-primary"/>
+    </form>
 {% endblock %}
