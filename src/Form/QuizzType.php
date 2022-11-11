@@ -3,14 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Quizz;
-use App\Entity\Questions;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
-
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class QuizzType extends AbstractType
 {
@@ -24,9 +25,10 @@ class QuizzType extends AbstractType
                     'Gaming' => "gaming",
                     'Voyage' => "Voyage",]
             ])
-            ->add('Title')
-            ->add('Description', TextareaType::class)
+            ->add('Title', TextType::class, ['label' => 'Titre du quizz :'])
+            ->add('Description', TextareaType::class, ['label' => 'Description du quizz :'])
             ->add('Theme', ChoiceType::class, [
+                'label' => 'Thème :',
                 'choices' => [
                     'Sport' => "Sport",
                     'Gaming' => "Gaming",
@@ -45,6 +47,7 @@ class QuizzType extends AbstractType
             ])
                     
             ->add('Difficulty', ChoiceType::class, [
+                'label' => 'Difficulté :',
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
@@ -55,13 +58,17 @@ class QuizzType extends AbstractType
             ])
             ->add('Questions', CollectionType::class, [
                 'entry_type' => QuestionsType::class,
-                'label' => 'Questions',
+                'label' => 'Les questions :',
+                'required' => true,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false
             ])
-            ->add('imageFile', VichImageType::class)
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'label' => 'Image du quizz :'
+            ])
             ->add('valider', SubmitType::class);
     }
 

@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Quizz;
-use App\Entity\User;
 use App\Form\QuizzType;
 use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\Cast\Array_;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +31,7 @@ class QuizzController extends AbstractController
         $form = $this->createForm(QuizzType::class, $quizz);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $quizz->getQuestions() != []) {
             $entityManager->persist($quizz);
             $entityManager->flush();
             $quizzRepository->save($quizz, true);
