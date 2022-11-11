@@ -28,11 +28,17 @@ class RegistrationFormType extends AbstractType
             ->add('ThemePref', ChoiceType::class, [
                 'choices' =>
                 [
-                    'Sport' => 'Sport',
-                    'Geographie' => 'Geographie',
-                    'Histoire' => 'Histoire',
-                    'Art' => 'Art',
-                    'Gastronomie' => 'Gastronomie'
+                    'Sport' => "Sport",
+                    'Gaming' => "Gaming",
+                    'Cinema' => "Cinema",
+                    'Fun' => "Fun",
+                    'Culutre Générale' => "Culutre Générale",
+                    'Sciences' => "Sciences",
+                    'Histoire' => "Histoire",
+                    'Pop Culture' => "Pop Culture",
+                    'Géographie' => "Géographie",
+                    'Animaux' => "Animaux",
+                    'Autre' => "Autre"
                 ]
             ])
             ->add('Age', IntegerType::class)
@@ -60,8 +66,7 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
