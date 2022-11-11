@@ -2,40 +2,44 @@
 
 namespace App\Controller;
 
+use App\Entity\Contact;
 use App\Form\ContactType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Mailer\MailerInterface;
 
 class ContactController extends AbstractController
 {
-    /**
-     * @Route("/contact", name="contact")
-     */
-    public function index(Request $request, MailerInterface $mailer)
+    #[Route('/contact', name: 'contact.index')]
+    public function index(Request $request, EntityManagerInterface $manager, MailerInterface $mailer): Response
     {
-        $form = $this->createForm(ContactType::class);
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+
         $form->handleRequest($request);
-
-
         if($form->isSubmitted() && $form->isValid()) {
 
             $contactFormData = $form->getData();
-            
-            $message = (new Email())
-                ->from($contactFormData['email'])
+
+            $manager->persist($contact);
+            $manager->flush();
+
+            $email = (new TemplatedEmail())
+                ->from($contact->getEmail())
                 ->to('iquestions716@gmail.com')
-                ->subject('vous avez reçu un email')
-                ->text('Sender : '.$contactFormData['email'].\PHP_EOL.
-                    $contactFormData['Message'],
-                    'text/plain');
-            $mailer->send($message);
+                ->subject($contact->getSubject())
+                ->htmlTemplate('emails/contact.html.twig')
+                ->context(['contact' => $contact]);
+
+            $mailer->send($email);
 
             $this->addFlash('success', 'Votre message a été envoyé');
 
-            return $this->redirectToRoute('contact');
+            return $this->redirectToRoute('contact.index');
         }
 
         return $this->render('contact/index.html.twig', [
