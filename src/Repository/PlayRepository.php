@@ -39,28 +39,30 @@ class PlayRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Play[] Returns an array of Play objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Play[] Returns an array of Play objects
+    */
+   public function findBestPlayers($quizz): array
+   {
+       return $this->createQueryBuilder('p')
+       ->andWhere('p.quizz = :quizz')
+       ->setParameter('quizz', $quizz)
+           ->orderBy('p.ScoreUser', 'ASC')
+           ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
-//    public function findOneBySomeField($value): ?Play
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findIfUserAlreadyPlayed($user, $quizz): ?Play
+   {
+       return $this->createQueryBuilder('p')
+           ->andWhere('p.player = :user')
+           ->andWhere('p.quizz = :quizz')
+           ->setParameter('user', $user)
+           ->setParameter('quizz', $quizz)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

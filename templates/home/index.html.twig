@@ -59,7 +59,7 @@
 									<p class="card-text">Theme: {{ quizz.Theme}}</p>
 									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
 									<p class="card-text">Auteur: {{ quizz.Author}}</p>
-									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
+									<a href="{{path('app_play', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
 								</div>
 							</div>
 						</div>
