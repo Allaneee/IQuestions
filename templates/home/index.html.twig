@@ -53,13 +53,17 @@
 					{% for quizz in quizzs %}
 						<div class="col-auto">
 							<div class="card" style="width: 18rem;">
-							<img class="card-img-top" src="{{ asset('uploads/user/quizz_image/')~ quizz.ImageName }}" alt="Card image cap"> 
+								{% if quizz.ImageName != null %}
+									<img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/')~ quizz.ImageName }}" alt="Card image cap">
+								{% else %}
+									<img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/defaultQuizz.png') }}" alt="Card image cap">
+								{% endif %}
 								<div class="card-body">
 									<h5 class="card-title">{{ quizz.Title}}</h5>
 									<p class="card-text">Theme: {{ quizz.Theme}}</p>
 									<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
 									<p class="card-text">Auteur: {{ quizz.Author}}</p>
-									<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
+									<a href="{{path('app_play', {'id': quizz.id})}}" class="btn btn-success">Jouer !</a>
 								</div>
 							</div>
 						</div>

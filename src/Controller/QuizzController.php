@@ -27,10 +27,10 @@ class QuizzController extends AbstractController
     {
         $quizz = new Quizz();
         $quizz->setAuthor($this->getUser());
-        $form = $this->createForm(QuizzType::class, $quizz);    
+        $form = $this->createForm(QuizzType::class, $quizz);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $quizz->getQuestions() != []) {
             $entityManager->persist($quizz);
             $entityManager->flush();
             $quizzRepository->save($quizz, true);

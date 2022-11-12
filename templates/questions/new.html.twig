@@ -1,9 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends '/questionbase.html.twig' %}
 
-{% block title %}Questions{% endblock %}
+{% block title %}Nouvelle question :{% endblock %}
 
 {% block body %}
-    <h1>Créer des questions</h1>
 
     {{ include('questions/_form.html.twig') }}
 
