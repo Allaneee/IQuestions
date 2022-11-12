@@ -3,13 +3,15 @@
 {% block title %}IQuestions - Jouer{% endblock %}
 
 {% block body %}
+<div class="container">
     <h3>{{ quizz.Title }}</h3>
     <p> {{quizz.description}} </p>
     <img class="card-img-top" src="{{ asset('uploads/user/quizz_image/')~ quizz.ImageName }}" alt="Card image cap">
     <form>
     {% for question in questions %}
+        <div class="container">
         <h5>{{ question.Wording }}</h5>
-            <div>
+            
             {% for answer in question.Answers %}
                     <input type="radio" id="{{answer}}" name="{{question.id}}" value={{answer}} required="required">
                     <label for={{answer}}>{{answer}}</label>
@@ -19,4 +21,5 @@
 
     <input type="submit" value="Play" class="btn btn-outline-primary"/>
     </form>
+    </div>
 {% endblock %}

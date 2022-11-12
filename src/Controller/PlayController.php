@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Answer;
 use App\Entity\Play;
 use App\Entity\Quizz;
 use App\Form\PlayType;
+use App\Repository\AnswerRepository;
 use App\Repository\PlayRepository;
 use App\Repository\QuestionsRepository;
 use App\Repository\QuizzRepository;
@@ -23,18 +25,60 @@ class PlayController extends AbstractController
 {
 
     #[Route('/{id}', name: 'app_play', methods:['GET'])]
-    public function index(Request $request, Quizz $quizz, QuestionsRepository $questionsRepository): Response
+    public function index(
+        Request $request, 
+        Quizz $quizz, 
+        QuestionsRepository $questionsRepository,
+        PlayRepository $playRepository,
+        AnswerRepository $answerRepository
+        ): Response
     {
+        $scoreMax = 0;
+
         $questions = $questionsRepository->findByQuizz($quizz);
         foreach ($questions as $question) {
             $quizz->addQuestion($question);
+            $scoreMax += 1;
         }
 
+        //Verifie si le joueurs a déjà jouer
+        if(!is_null($played = $playRepository->findIfUserAlreadyPlayed($this->getUser(), $quizz))){
+            return $this->render('play/result.html.twig', [
+                'quizz' => $quizz,
+                'score' => $played->getScoreUser(),
+                'scoreMax' => $scoreMax,
+                'classement' => array_reverse($playRepository->findBestPlayers($quizz))
+            ]);
+        }
+        //Si le joueur n'a pas déjà jouer
+        
+        //On récupère les réponses
         if($request->query->all() != []){
-            //Calculer le score
-            // return $this->render('play/index.html.twig', [
-            //     'result' => $this->result($request->query->all(), $quizz),
-            // ]);
+
+            $userAnswers = $request->query->all();
+            $score = $this->calculScore($userAnswers, $quizz);
+
+            //On enregistre les réponses
+            $play = new Play();
+            $play->setPlayer($this->getUser())->setQuizz($quizz)->setScoreUser($score);
+            $playRepository->save($play, true);
+            
+            foreach ($userAnswers as $key => $userAnswer) {
+                $answer = new Answer();
+                $answer->setPlayer($this->getUser())
+                ->setQuestions($questionsRepository->findOneById(intval($key)))
+                ->setAnswerUser($userAnswer);
+                
+                $answerRepository->save($answer,true);
+            }
+            
+            return $this->render('play/result.html.twig', [
+                'quizz' => $quizz,
+                'score' => $score,
+                'scoreMax' => $scoreMax,
+                'classement' => array_reverse($playRepository->findBestPlayers($quizz))
+            ]);
+            
         }
         return $this->render('play/index.html.twig', [
             'quizz' => $quizz,
@@ -42,7 +86,7 @@ class PlayController extends AbstractController
         ]);
     }
 
-    public function result(Array $answered, Quizz $quizz)
+    public function calculScore(Array $answered, Quizz $quizz)
     {
         $result = 0;
         foreach ($quizz->getQuestions() as $question) {
