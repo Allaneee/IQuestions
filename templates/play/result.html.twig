@@ -6,7 +6,11 @@
     <div class="container">
     <h3>{{ quizz.Title }}</h3>
     <p> {{quizz.description}} </p>
-    <img class="card-img-top" src="{{ asset('uploads/user/quizz_image/')~ quizz.ImageName }}" alt="Card image cap">
+     {% if quizz.ImageName != null %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/')~ quizz.ImageName }}" alt="Card image cap">
+    {% else %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/defaultQuizz.png') }}" alt="Card image cap">
+    {% endif %}
 
     <h5 class="text-success">Votre score est de : {{ score }} / {{scoreMax}}</h5>
     <h5> Voici les 10 meilleurs joueurs : <h5>

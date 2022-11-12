@@ -6,14 +6,21 @@
 <div class="container">
     <h3>{{ quizz.Title }}</h3>
     <p> {{quizz.description}} </p>
-    <img class="card-img-top" src="{{ asset('uploads/user/quizz_image/')~ quizz.ImageName }}" alt="Card image cap">
+    {% if quizz.ImageName != null %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/')~ quizz.ImageName }}" alt="Card image cap">
+    {% else %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/defaultQuizz.png') }}" alt="Card image cap">
+    {% endif %}
+
     <form>
     {% for question in questions %}
         <div class="container">
         <h5>{{ question.Wording }}</h5>
-            
-            {% for answer in question.Answers %}
-                    <input type="radio" id="{{answer}}" name="{{question.id}}" value={{answer}} required="required">
+        {% if question.imageNameQuestion != null %}
+            <img class="img-thumbnail" width="150" height="150" src="{{ asset('/uploads/images/question/')~ question.imageNameQuestion }}" alt="Card image cap">
+        {% endif %}
+            {% for rep,answer in question.Answers %}
+                    <input type="radio" id="{{answer}}" name="{{question.id}}" value={{rep}} required="required">
                     <label for={{answer}}>{{answer}}</label>
             {% endfor %}
             </div>

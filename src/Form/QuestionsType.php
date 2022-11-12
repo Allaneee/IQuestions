@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Questions;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -28,7 +29,14 @@ class QuestionsType extends AbstractType
                 'required' => false,
                 'label' => 'Illustrer votre question :'
             ])
-            ->add('CorrectAnswer', TextType::class, ['label' => 'Bonne réponse'])
+            ->add('CorrectAnswer', ChoiceType::class, [
+                'choices' => [
+                    'Réponse n°1' => 'rep1',
+                    'Réponse n°2' => 'rep2',
+                    'Réponse n°3' => 'rep3',
+                    'Réponse n°4' => 'rep4',
+                ],
+                'label' => 'Bonne réponse'])
         ;
     }
 
