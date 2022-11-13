@@ -22,7 +22,7 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
         $url = $this->adminUrlGenerator
-            ->setController(UserCrudController::class)
+            ->setController(QuizzCrudController::class)
             ->generateUrl();
         return $this->redirect($url);
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -52,7 +52,7 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::section('Users');
         yield MenuItem::linkToCrud('Create user', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW);
-        yield MenuItem::linkToCrud('Show users', 'fas fa-eye', User::class);
+        yield MenuItem::linkToCrud('Show users', 'fas fa-eye', User::class)->setPermission('ROLE_ADMIN');
 
         yield MenuItem::section('Quizz');
         yield MenuItem::linkToCrud('Show quizz', 'fas fa-eye', Quizz::class);

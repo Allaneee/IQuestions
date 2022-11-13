@@ -7,10 +7,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -27,7 +27,10 @@ class QuizzCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             TextField::new('title'),
             TextEditorField::new('description'),
-            AssociationField::new('questions'),
+            TextField::new('Theme'),
+            IntegerField::new('Difficulty'),
+            AssociationField::new('Author')->hideOnForm()->setPermission('ROLE_ADMIN'),
+            BooleanField::new('hide')->hideOnForm()
         ];
     }
 
