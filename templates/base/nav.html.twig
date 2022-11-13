@@ -25,7 +25,7 @@
         <form class="form-inline mt-2 mt-md-0">
             {% if app.user %}
             <div class='col-xs-10'>
-            {% if is_granted('ROLE_ADMIN') %} 
+            {% if (is_granted('ROLE_MODERATOR') or is_granted('ROLE_ADMIN')) %} 
                  <a class="btn btn-outline-light" href="{{ path('admin') }}">Admin</a>
             {% endif %}
             <a class="btn btn-outline-light" href="{{ path('app_user_profil') }}">Profil</a>
