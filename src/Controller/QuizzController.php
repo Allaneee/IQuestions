@@ -61,7 +61,7 @@ class QuizzController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $quizzRepository->save($quizz, true);
 
-            return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quizz/edit.html.twig', [
