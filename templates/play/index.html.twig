@@ -1,35 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Play index{% endblock %}
+{% block title %}IQuestions - Jouer{% endblock %}
 
 {% block body %}
-    <h1>Play index</h1>
+<div class="container d-flex flex-column">
+    <h3>{{ quizz.Title }}</h3>
+    <p> {{quizz.description}} </p>
+    {% if quizz.ImageName != null %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/')~ quizz.ImageName }}" alt="Card image cap">
+    {% else %}
+        <img class="img-fluid"  width="300" height="300" src="{{ asset('/uploads/images/quizz/defaultQuizz.png') }}" alt="Card image cap">
+    {% endif %}
+    <h3 class="text-success align-self-center my-3"> Questions : </h3>
+    <form class="d-flex flex-column">
+    {% for question in questions %}
+        <div class="d-flex flex-column align-items-center mb-5">
+        <h5 class"mb-3">{{ question.Wording }}</h5>
+        {% if question.imageNameQuestion != null %}
+            <img class="img-thumbnail mb-3" width="150" height="150" src="{{ asset('/uploads/images/question/')~ question.imageNameQuestion }}" alt="Card image cap">
+        {% endif %}
+        <div>
+            {% for rep,answer in question.Answers %}
+                    {# <input type="radio" id="{{answer}}" name="{{question.id}}" value={{rep}} required="required">
+                    <label for={{answer}}>{{answer}}</label> #}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>ScoreUser</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for play in plays %}
-            <tr>
-                <td>{{ play.id }}</td>
-                <td>{{ play.ScoreUser }}</td>
-                <td>
-                    <a href="{{ path('app_play_show', {'id': play.id}) }}">show</a>
-                    <a href="{{ path('app_play_edit', {'id': play.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id={{answer}} name={{question.id}} value={{rep}} required="required" class="custom-control-input">
+                        <label class="custom-control-label" for={{answer}}>{{answer}}</label>
+                    </div>
+            {% endfor %}
+        </div>
+        </div>
+    {% endfor %}
 
-    <a href="{{ path('app_play_new') }}">Create new</a>
+    <input type="submit" value="Valider" class="align-self-center btn btn-primary mb-3"/>
+    </form>
+</div>
 {% endblock %}

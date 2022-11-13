@@ -5,10 +5,13 @@ namespace App\Entity;
 use App\Repository\QuestionsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
+use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: QuestionsRepository::class)]
+#[Vich\Uploadable]
 class Questions
 {
     #[ORM\Id]
@@ -19,16 +22,21 @@ class Questions
     #[ORM\Column(length: 255)]
     private ?string $Wording = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $Answers = null;
+    #[ORM\Column]
+    private array $Answers = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $Image = null;
+    #[Vich\UploadableField(mapping: 'question_image', fileNameProperty: 'imageNameQuestion')]
+    private ?File $imagesFileQuestion = null;
+
+   
+    #[ORM\Column(type: 'string', nullable: true)]
+    #[Assert\IsNull]
+    private ?string $imageNameQuestion = null;
 
     #[ORM\Column(length: 255)]
     private ?string $CorrectAnswer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne(targetEntity: Quizz::class,cascade : ["persist", "remove"], inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quizz $quizz = null;
 
@@ -39,7 +47,14 @@ class Questions
     {
         $this->playeranswers = new ArrayCollection();
     }
-
+    private $questions;
+    
+    public function getquestions(){
+        return $this->questions;
+    }
+    public function setQuestions($questions){
+        $this->questions=$questions;
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -57,14 +72,14 @@ class Questions
         return $this;
     }
 
-    public function getAnswers(): ?string
+    public function getAnswers(): ?array
     {
         return $this->Answers;
     }
 
-    public function setAnswers(string $Answers): self
+    public function setAnswers(array $answers): self
     {
-        $this->Answers = $Answers;
+        $this->Answers = $answers;
 
         return $this;
     }
@@ -122,7 +137,10 @@ class Questions
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->getWording();
+    }
     public function removePlayeranswer(Answer $playeranswer): self
     {
         if ($this->playeranswers->removeElement($playeranswer)) {
@@ -134,4 +152,33 @@ class Questions
 
         return $this;
     }
+    /**
+    * 
+    * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imagesFileQuestion
+    */
+   public function setimagesFileQuestion(?File $image = null): void
+   {
+       $this->imagesFileQuestion = $image;
+
+       if ($image) {
+           // It is required that at least one field changes if you are using doctrine
+           // otherwise the event listeners won't be called and the file is lost
+           $this->updatedAt = new \DateTime('now');
+       }
+   }
+
+   public function getimagesFileQuestion(): ?File
+   {
+       return $this->imagesFileQuestion;
+   }
+
+   public function setimageNameQuestion(?string $imageNameQuestion): void
+   {
+       $this->imageNameQuestion = $imageNameQuestion;
+   }
+
+   public function getimageNameQuestion(): ?string
+   {
+       return $this->imageNameQuestion;
+   }
 }

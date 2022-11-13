@@ -6,6 +6,7 @@ use App\Entity\Quizz;
 use App\Form\QuizzType;
 use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,16 +23,18 @@ class QuizzController extends AbstractController
     }
 
     #[Route('/new', name: 'app_quizz_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuizzRepository $quizzRepository): Response
+    public function new(Request $request, QuizzRepository $quizzRepository, EntityManagerInterface $entityManager): Response
     {
         $quizz = new Quizz();
+        $quizz->setAuthor($this->getUser());
         $form = $this->createForm(QuizzType::class, $quizz);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $quizz->getQuestions() != []) {
+            $entityManager->persist($quizz);
+            $entityManager->flush();
             $quizzRepository->save($quizz, true);
-
-            return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quizz/new.html.twig', [
@@ -45,6 +48,7 @@ class QuizzController extends AbstractController
     {
         return $this->render('quizz/show.html.twig', [
             'quizz' => $quizz,
+            'questions' => $quizz->getQuestions()
         ]);
     }
 
@@ -57,7 +61,7 @@ class QuizzController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $quizzRepository->save($quizz, true);
 
-            return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quizz/edit.html.twig', [
@@ -73,6 +77,6 @@ class QuizzController extends AbstractController
             $quizzRepository->remove($quizz, true);
         }
 
-        return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_profil', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\Questions;
 use App\Form\QuestionsType;
 use App\Repository\QuestionsRepository;
+use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/questions')]
@@ -22,9 +24,11 @@ class QuestionsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_questions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuestionsRepository $questionsRepository): Response
+    public function new(Request $request, QuestionsRepository $questionsRepository, QuizzRepository $quizzRepository): Response
     {
         $question = new Questions();
+        $question->setQuizz($quizzRepository->findOneByTitle($request->query->get('quizz')));
+
         $form = $this->createForm(QuestionsType::class, $question);
         $form->handleRequest($request);
 
@@ -57,7 +61,7 @@ class QuestionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $questionsRepository->save($question, true);
 
-            return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_questions_show', ['id' => $question->getQuizz()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questions/edit.html.twig', [
@@ -73,6 +77,6 @@ class QuestionsController extends AbstractController
             $questionsRepository->remove($question, true);
         }
 
-        return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_quizz_show', ['id' => $question->getQuizz()->getId()]);
     }
 }
