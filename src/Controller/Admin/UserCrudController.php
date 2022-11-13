@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use Symfony\Component\HttpFoundation\Response;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
@@ -28,8 +27,6 @@ class UserCrudController extends AbstractCrudController
         return [
             TextField::new('pseudo'),
             EmailField::new('email'),
-            ArrayField::new('Roles'),
-            TextField::new('theme_pref'),
             IntegerField::new('age'),
             BooleanField::new('hide')
         ];

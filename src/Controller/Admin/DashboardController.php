@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use App\Entity\User;
+use App\Entity\Quizz;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -50,11 +51,10 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::section('Users');
-        yield MenuItem::subMenu('Actions', 'fas fa-bars')->setSubItems([
-            MenuItem::linkToCrud('Create user', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW),
-            MenuItem::linkToCrud('Show users', 'fas fa-eye', User::class)
-        ]);
+        yield MenuItem::linkToCrud('Create user', 'fas fa-plus', User::class)->setAction(Crud::PAGE_NEW);
+        yield MenuItem::linkToCrud('Show users', 'fas fa-eye', User::class);
 
         yield MenuItem::section('Quizz');
+        yield MenuItem::linkToCrud('Show quizz', 'fas fa-eye', Quizz::class);
     }
 }

@@ -27,6 +27,10 @@ class PlayController extends AbstractController
         AnswerRepository $answerRepository
         ): Response
     {
+        if($this->getUser()->isHide() == true){
+            return $this->render('user/userBan.html.twig', []);
+        }
+
         $scoreMax = 0;
 
         $questions = $questionsRepository->findByQuizz($quizz);
