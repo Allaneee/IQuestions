@@ -42,3 +42,6 @@ Upload d'images :
    ```sh
    composer install
    ```
+### Informations diverse :
+
+Le premier utilisateur créer est obligatoirement un administrateur.
