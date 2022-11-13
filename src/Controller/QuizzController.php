@@ -34,7 +34,7 @@ class QuizzController extends AbstractController
             $entityManager->persist($quizz);
             $entityManager->flush();
             $quizzRepository->save($quizz, true);
-            return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_profil', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quizz/new.html.twig', [
