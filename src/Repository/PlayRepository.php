@@ -54,6 +54,19 @@ class PlayRepository extends ServiceEntityRepository
        ;
    }
 
+   /**
+    * @return Play[] Returns an array of Play objects
+    */
+    public function findAllPlayersOfQuizz($quizz): array
+    {
+        return $this->createQueryBuilder('p')
+        ->andWhere('p.quizz = :quizz')
+        ->setParameter('quizz', $quizz)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
    public function findIfUserAlreadyPlayed($user, $quizz): ?Play
    {
        return $this->createQueryBuilder('p')

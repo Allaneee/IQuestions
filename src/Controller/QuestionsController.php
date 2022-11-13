@@ -61,7 +61,7 @@ class QuestionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $questionsRepository->save($question, true);
 
-            return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_questions_show', ['id' => $question->getQuizz()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questions/edit.html.twig', [
@@ -77,6 +77,6 @@ class QuestionsController extends AbstractController
             $questionsRepository->remove($question, true);
         }
 
-        return $this->redirectToRoute('app_questions_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_quizz_show', ['id' => $question->getQuizz()->getId()]);
     }
 }

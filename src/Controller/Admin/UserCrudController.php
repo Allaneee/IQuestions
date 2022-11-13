@@ -63,11 +63,12 @@ class UserCrudController extends AbstractCrudController
             ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
                 return $action->setIcon('fas fa-pencil')->setLabel(false)->setCssClass('btn btn-primary');
             })
-            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+            ->update(Crud::PAGE_DETAIL, Action::DELETE, function (Action $action) {
                 return $action->setIcon('fas fa-trash')->setLabel(false)->setCssClass('btn btn-danger');
             })
             ->add(Crud::PAGE_INDEX, $upgrade)
-            ->add(Crud::PAGE_INDEX, $downgrade);
+            ->add(Crud::PAGE_INDEX, $downgrade)
+            ->remove(Crud::PAGE_INDEX, Action::NEW);
         ;
     }
 

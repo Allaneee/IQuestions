@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\PlayRepository;
 use App\Repository\QuizzRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,10 +17,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('', name: 'app_user_profil', methods: ['GET'])]
-    public function profil(QuizzRepository $quizzRepository): Response
+    public function profil(QuizzRepository $quizzRepository, PlayRepository $playRepository): Response
     {
+        $quizzs = $quizzRepository->findAllByUserId($this->getUser()->getId());
+        foreach ($quizzs as $key => $quizz) {
+            $played = $playRepository->findAllPlayersOfQuizz($quizz);
+            foreach ($played as $key => $play) {
+                $quizz->addPlayed($play);
+            }
+        }
+        
         return $this->render('user/profil.html.twig', [
-            'quizzs' => $quizzRepository->findAllByUserId($this->getUser()->getId())
+            'quizzs' => $quizzs
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,8 +16,9 @@ class UserType extends AbstractType
         $builder
             ->add('Pseudo')
             ->add('email')
-            ->add('password')
+            ->add('password', TextType::class ,['label' => 'Mot de passe'])
             ->add('ThemePref', ChoiceType::class, [
+                'label' => 'Thème préférer',
                 'choices' =>
                 [
                     'Sport' => "Sport",

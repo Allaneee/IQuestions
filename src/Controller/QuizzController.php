@@ -77,6 +77,6 @@ class QuizzController extends AbstractController
             $quizzRepository->remove($quizz, true);
         }
 
-        return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_profil', [], Response::HTTP_SEE_OTHER);
     }
 }
